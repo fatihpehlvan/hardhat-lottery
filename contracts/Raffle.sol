@@ -7,9 +7,9 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.8;
-import '@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol';
-import '@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol';
-import '@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol';
+import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
 
 error Raffle__NotEnoughETHEntered();
 error Raffle__TransferFailed();
@@ -104,7 +104,7 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         // Request the random number
         // Once we get it, do something with it
         // transaction process
-        (bool upkeepNeeded, ) = checkUpkeep('');
+        (bool upkeepNeeded, ) = checkUpkeep("");
         if (!upkeepNeeded) {
             revert Raffle__UpkeepNotNeeded(
                 address(this).balance,
@@ -135,7 +135,7 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
         s_players = new address payable[](0);
         s_lastTimeStamp = block.timestamp;
         // sending money to another address
-        (bool success, ) = recentWinner.call{value: address(this).balance}('');
+        (bool success, ) = recentWinner.call{value: address(this).balance}("");
         if (!success) {
             revert Raffle__TransferFailed();
         }
@@ -173,5 +173,9 @@ contract Raffle is VRFConsumerBaseV2, KeeperCompatibleInterface {
 
     function getRequestConfirmations() public pure returns (uint256) {
         return REQUEST_CONFIRMATIONS;
+    }
+
+    function getInterval() public view returns (uint256) {
+        return i_interval;
     }
 }
